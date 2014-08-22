@@ -3,6 +3,8 @@ postmessage-client-server
 
 > A simple promise-based client and server to communicate between pages and iframes with postmessage.
 
+All data passed will be serialized with JSON. Uses [Q promises](https://github.com/kriskowal/q).
+
 ## Installation
 
 In your project dir:
@@ -13,10 +15,11 @@ npm install --save postmessage-client-server
 
 ## Server
 
-In your page loaded via iframe:
+In your page the iframe will load on your server:
 
 ```js
 var server = require('postmessage-client-server/server');
+
 server({
   // Include any methods you wish to call from the client
   bark: function (thing) {
@@ -38,7 +41,8 @@ On your client webpage:
 ```js
 var client = require('postmessage-client-server/client'),
   urlToServerPage = 'http://mycorp.com/serverFrame.html';
-client(urlToServerPage)
+
+client(urlToServerPage) // adds an iframe to the given url in your page
   .then(function (send) {
     // now we have our send function: send(method, args)
     send('sniff')
