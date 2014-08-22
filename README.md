@@ -29,6 +29,10 @@ server({
   sniff: function () {
     console.log('SERVER: Sniffing...');
     return ['grass', 'ball'];
+  },
+  beBad: function () {
+    console.log('SERVER: About to misbehave...');
+    throw 'Eating shoe';
   }
 });
 ```
@@ -54,6 +58,12 @@ client(urlToServerPage) // adds an iframe to the given url in your page
               console.log('CLIENT: Bark result:', result);
             });
         });
+        send('beBad')
+          .then(function () {
+            console.log('CLIENT: Not punished');  // won't happen
+          }, function (reason) {
+            console.log('CLIENT: Got punished for', reason);
+          });
       });
   });
 ```
@@ -67,8 +77,10 @@ SERVER: Sniffing...
 CLIENT: We smelt: ["grass", "ball"]
 SERVER: Bark at grass
 SERVER: Bark at ball
+SERVER: About to misbehave...
+CLIENT: Got punished for Eating shoe
 CLIENT: Bark result: Barked at grass
-CLIENT: Bark result: Barked at ball
+CLIENT: Bark result: Barked at ball 
 ```
 
 Remember that the calls are asynchronous, so the order may vary.

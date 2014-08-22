@@ -50,4 +50,5 @@ var Q = require('q'),
     document.body.appendChild(iframe);
     return deferred.promise;
   };
+Q.stopUnhandledRejectionTracking();
 module.exports = client;

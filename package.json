@@ -1,7 +1,7 @@
 {
   "name": "postmessage-client-server",
   "description": "A simple promise-based client and server to communicate between pages and iframes with postmessage.",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "homepage": "https://github.com/erikras/postmessage-client-server",
   "author": {
     "name": "Erik Rasmussen",

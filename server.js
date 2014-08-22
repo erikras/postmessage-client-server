@@ -7,12 +7,16 @@ var Q = require('q'),
       }
       var method = methods[event.data.method];
       if (method) {
-        Q(method.apply(null, event.data.args))
-          .then(function (result) {
-            event.source.postMessage(JSON.stringify({id: event.data.id, result: result}), event.origin);
-          }, function (error) {
-            event.source.postMessage(JSON.stringify({id: event.data.id, error: error}), event.origin);
-          });
+        try {
+          Q(method.apply(null, event.data.args))
+            .then(function (result) {
+              event.source.postMessage(JSON.stringify({id: event.data.id, result: result}), event.origin);
+            }, function (error) {
+              event.source.postMessage(JSON.stringify({id: event.data.id, error: error}), event.origin);
+            });
+        } catch (e) {
+          event.source.postMessage(JSON.stringify({id: event.data.id, error: e.message || e }), event.origin);
+        }
       } else {
         throw 'No method "' + event.data.method + '" found';
       }
