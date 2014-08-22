@@ -19,7 +19,7 @@ var Q = require('q'),
         var deferred = Q.defer(),
           id = count++;
         promises[id] = deferred;
-        iframe.contentWindow.postMessage({id: id, method: method, args: toArray(arguments).slice(1)}, target);
+        iframe.contentWindow.postMessage(JSON.stringify({id: id, method: method, args: toArray(arguments).slice(1)}), target);
         return deferred.promise;
       };
     iframe.src = target;

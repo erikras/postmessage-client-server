@@ -5,20 +5,28 @@ var Q = require('q'),
       if (event.source !== window.parent) {
         return;
       }
-      var method = methods[event.data.method];
-      if (method) {
-        try {
-          Q(method.apply(null, event.data.args))
-            .then(function (result) {
-              event.source.postMessage(JSON.stringify({id: event.data.id, result: result}), event.origin);
-            }, function (error) {
-              event.source.postMessage(JSON.stringify({id: event.data.id, error: error}), event.origin);
-            });
-        } catch (e) {
-          event.source.postMessage(JSON.stringify({id: event.data.id, error: e.message || e }), event.origin);
+      var data, method;
+      try {
+        data = JSON.parse(event.data);
+      } catch (e) {
+        // unable to parse data, so didn't come from client
+      }
+      if(data) {
+        method = methods[data.method];
+        if (method) {
+          try {
+            Q(method.apply(null, data.args))
+              .then(function (result) {
+                event.source.postMessage(JSON.stringify({id: data.id, result: result}), event.origin);
+              }, function (error) {
+                event.source.postMessage(JSON.stringify({id: data.id, error: error}), event.origin);
+              });
+          } catch (e) {
+            event.source.postMessage(JSON.stringify({id: data.id, error: e.message || e }), event.origin);
+          }
+        } else {
+          throw 'No method "' + data.method + '" found';
         }
-      } else {
-        throw 'No method "' + event.data.method + '" found';
       }
     });
     window.parent.postMessage(JSON.stringify({postmessageClientServerInit: true}), '*');
