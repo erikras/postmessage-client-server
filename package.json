@@ -1,0 +1,40 @@
+{
+  "name": "postmessage-client-server",
+  "description": "A simple promise-based client and server to communicate between pages and iframes with postmessage.",
+  "version": "0.0.1",
+  "homepage": "https://github.com/erikras/postmessage-client-server",
+  "author": {
+    "name": "Erik Rasmussen",
+    "url": "http://erikras.com/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/erikras/postmessage-client-server.git"
+  },
+  "bugs": {
+    "url": "git://github.com/erikras/postmessage-client-server/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/erikras/postmessage-client-server/blob/master/LICENSE-MIT"
+    }
+  ],
+  "engines": {
+    "node": ">= 0.10.0"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "q": "1.0.0"
+  },
+  "keywords": [
+    "postmessage", "iframe", "messaging", "rpc"
+  ],
+  "files": [
+    "index.js",
+    "client.js",
+    "server.js",
+    "README.md",
+    "LICENSE-MIT"
+  ]
+}
