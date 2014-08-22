@@ -16,16 +16,17 @@ npm install --save postmessage-client-server
 In your page loaded via iframe:
 
 ```js
+'use strict';
 var server = require('postmessage-client-server/server');
 server({
   // Include any methods you wish to call from the client
   bark: function (thing) {
-    console.log('SERVER: Bark at ', thing);
-return 'Barked at ' + thing;
+    console.log('SERVER: Bark at', thing);
+    return 'Barked at ' + thing;
   },
   sniff: function () {
     console.log('SERVER: Sniffing...');
-    return ['grass', 'ball']
+    return ['grass', 'ball'];
   }
 });
 ```
@@ -39,14 +40,14 @@ On your client webpage:
 var client = require('postmessage-client-server/client'),
   urlToServerPage = 'http://mycorp.com/serverFrame.html';
 client(urlToServerPage)
-  .then(function(send) {
+  .then(function (send) {
     // now we have our send function: send(method, args)
     send('sniff')
-      .then(function(stuffSmelt) {
+      .then(function (stuffSmelt) {
         console.log('CLIENT: We smelt:', stuffSmelt);
-        stuffSmelt.forEach(function(item) {
+        stuffSmelt.forEach(function (item) {
           send('bark', item)
-            .then(function(result) {
+            .then(function (result) {
               console.log('CLIENT: Bark result:', result);
             });
         });
