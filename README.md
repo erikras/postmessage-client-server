@@ -55,6 +55,21 @@ client(urlToServerPage)
   });
 ```
   
+## Output
+
+The console output from the above example would be:
+
+```js
+SERVER: Sniffing...
+CLIENT: We smelt: ["grass", "ball"]
+SERVER: Bark at grass
+SERVER: Bark at ball
+CLIENT: Bark result: Barked at grass
+CLIENT: Bark result: Barked at ball
+```
+
+Remember that the calls are asynchronous, so the order may vary.
+
 ---
 
 Module submitted by [Erik Rasmussen](http://erikras.com/) [@erikras](https://twitter.com/erikras)
