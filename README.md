@@ -25,7 +25,7 @@ return 'Barked at ' + thing;
   },
   sniff: function () {
     console.log('SERVER: Sniffing...');
-return ['grass', 'ball']
+    return ['grass', 'ball']
   }
 });
 ```
