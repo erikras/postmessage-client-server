@@ -16,7 +16,6 @@ npm install --save postmessage-client-server
 In your page loaded via iframe:
 
 ```js
-'use strict';
 var server = require('postmessage-client-server/server');
 server({
   // Include any methods you wish to call from the client
