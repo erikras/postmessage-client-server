@@ -8,10 +8,10 @@ var Q = require('q'),
       var data, method;
       try {
         data = JSON.parse(event.data);
-      } catch (e) {
+      } catch (parseError) {
         // unable to parse data, so didn't come from client
       }
-      if(data) {
+      if (data) {
         method = methods[data.method];
         if (method) {
           try {

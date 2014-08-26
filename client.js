@@ -12,14 +12,15 @@ var Q = require('q'),
   client = function (target) {
     var deferred = Q.defer(),
       iframe = document.createElement('iframe'),
-      targetOrigin = target.match(/(.+\/\/[^/]+)\/?/)[1],
+      targetOrigin = target.match(/(.+\/\/[^\/]+)\/?/)[1],
       promises = [],
       count = 0,
       send = function (method) {
         var deferred = Q.defer(),
           id = count++;
         promises[id] = deferred;
-        iframe.contentWindow.postMessage(JSON.stringify({id: id, method: method, args: toArray(arguments).slice(1)}), target);
+        iframe.contentWindow.postMessage(JSON.stringify({id: id, method: method, args: toArray(arguments).slice(1)}),
+          target);
         return deferred.promise;
       };
     iframe.src = target;
@@ -29,12 +30,13 @@ var Q = require('q'),
       if (event.source !== iframe.contentWindow || event.origin !== targetOrigin) {
         return;
       }
-      var data = JSON.parse(event.data);
+      var data = JSON.parse(event.data),
+        callPromise;
       if (data.postmessageClientServerInit) {
         // initialized handshake, return send function
         deferred.resolve(send);
       } else {
-        var callPromise = promises[data.id];
+        callPromise = promises[data.id];
         if (callPromise) {
           delete promises[data.id];
           if (data.error) {
