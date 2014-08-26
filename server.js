@@ -31,4 +31,5 @@ var Q = require('q'),
     });
     window.parent.postMessage(JSON.stringify({postmessageClientServerInit: true}), '*');
   };
+Q.stopUnhandledRejectionTracking();
 module.exports = server;
