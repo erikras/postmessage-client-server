@@ -1,8 +1,13 @@
 'use strict';
 var Q = require('q'),
-  server = function (methods) {
+  /**
+   * Creates a server.
+   * @param methods the methods to be called on the server
+   */
+    server = function (methods) {
+    var clientWindow = window.parent === window ? window.opener : window.parent;
     window.addEventListener('message', function (event) {
-      if (event.source !== window.parent) {
+      if (event.source !== clientWindow) {
         return;
       }
       var data, method;
@@ -11,8 +16,8 @@ var Q = require('q'),
       } catch (parseError) {
         // unable to parse data, so didn't come from client
       }
-      if (data) {
-        method = methods[data.method];
+      if (data && data.postmessageClientServerMethod) {
+        method = methods[data.postmessageClientServerMethod];
         if (method) {
           try {
             Q(method.apply(null, data.args))
@@ -25,11 +30,11 @@ var Q = require('q'),
             event.source.postMessage(JSON.stringify({id: data.id, error: e.message || e }), event.origin);
           }
         } else {
-          throw 'No method "' + data.method + '" found';
+          throw 'No method "' + data.postmessageClientServerMethod + '" found';
         }
       }
     });
-    window.parent.postMessage(JSON.stringify({postmessageClientServerInit: true}), '*');
+    clientWindow.postMessage(JSON.stringify({postmessageClientServerInit: true}), '*');
   };
 Q.stopUnhandledRejectionTracking();
 module.exports = server;

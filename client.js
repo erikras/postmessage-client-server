@@ -9,25 +9,44 @@ var Q = require('q'),
     }
     return result;
   },
-  client = function (target) {
+  /**
+   * Creates a client to talk to a server
+   * @param target  the url where the server is
+   * @param targetWindow  the window where the server is. if null, an iframe will be created
+   * @returns {promise|*|Q.promise} a promise that will be resolved with the send(method, params) function
+   * when the client has connected to the server
+   */
+    client = function (target, targetWindow) {
     var deferred = Q.defer(),
-      iframe = document.createElement('iframe'),
+      getTargetWindow,
       targetOrigin = target.match(/(.+\/\/[^\/]+)\/?/)[1],
+      iframe,
       promises = [],
       count = 0,
       send = function (method) {
         var deferred = Q.defer(),
           id = count++;
         promises[id] = deferred;
-        iframe.contentWindow.postMessage(JSON.stringify({id: id, method: method, args: toArray(arguments).slice(1)}),
-          target);
+        getTargetWindow().postMessage(JSON.stringify({id: id, postmessageClientServerMethod: method, args: toArray(arguments).slice(1)}),
+          targetOrigin);
         return deferred.promise;
       };
-    iframe.src = target;
-    iframe.style.cssText = 'position:absolute;left:-2px;top:-2px;width:1px;height:1px;';
+    if (targetWindow) {
+      getTargetWindow = function () {
+        return targetWindow;
+      };
+    } else {
+      iframe = document.createElement('iframe');
+      iframe.src = target;
+      iframe.style.cssText = 'position:absolute;left:-2px;top:-2px;width:1px;height:1px;';
+      getTargetWindow = function () {
+        return iframe.contentWindow;
+      };
+      document.body.appendChild(iframe);
+    }
 
     window.addEventListener('message', function (event) {
-      if (event.source !== iframe.contentWindow || event.origin !== targetOrigin) {
+      if (event.source !== getTargetWindow() || event.origin !== targetOrigin) {
         return;
       }
       var data = JSON.parse(event.data),
@@ -49,7 +68,6 @@ var Q = require('q'),
         }
       }
     });
-    document.body.appendChild(iframe);
     return deferred.promise;
   };
 Q.stopUnhandledRejectionTracking();
