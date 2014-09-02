@@ -1,5 +1,5 @@
 'use strict';
-var Q = require('q'),
+var when = require('when'),
   /**
    * Creates a server.
    * @param methods the methods to be called on the server
@@ -19,16 +19,15 @@ var Q = require('q'),
       if (data && data.postmessageClientServerMethod) {
         method = methods[data.postmessageClientServerMethod];
         if (method) {
-          try {
-            Q(method.apply(null, data.args))
-              .then(function (result) {
-                event.source.postMessage(JSON.stringify({id: data.id, result: result}), event.origin);
-              }, function (error) {
-                event.source.postMessage(JSON.stringify({id: data.id, error: error}), event.origin);
-              });
-          } catch (e) {
-            event.source.postMessage(JSON.stringify({id: data.id, error: e.message || e }), event.origin);
-          }
+          when(method.apply(null, data.args))
+            .then(function (result) {
+              event.source.postMessage(JSON.stringify({id: data.id, result: result}), event.origin);
+            }, function (error) {
+              event.source.postMessage(JSON.stringify({id: data.id, error: error}), event.origin);
+            })
+            .catch(function (e) {
+              event.source.postMessage(JSON.stringify({id: data.id, error: e.message || e }), event.origin);
+            });
         } else {
           throw 'No method "' + data.postmessageClientServerMethod + '" found';
         }
@@ -36,5 +35,4 @@ var Q = require('q'),
     });
     clientWindow.postMessage(JSON.stringify({postmessageClientServerInit: true}), '*');
   };
-Q.stopUnhandledRejectionTracking();
 module.exports = server;

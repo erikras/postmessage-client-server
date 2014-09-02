@@ -3,7 +3,7 @@ postmessage-client-server
 
 > A simple promise-based client and server to communicate between pages and iframes with postmessage.
 
-All data passed will be serialized with JSON. Uses [Q promises](https://github.com/kriskowal/q).
+All data passed will be serialized with JSON. Uses [when.js promises](https://github.com/cujojs/when).
 
 ## Installation
 
