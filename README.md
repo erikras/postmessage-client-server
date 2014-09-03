@@ -87,4 +87,4 @@ Remember that the calls are asynchronous, so the order may vary.
 
 ---
 
-Module submitted by [Erik Rasmussen](http://erikras.com/) [@erikras](https://twitter.com/erikras)
+Module submitted by [Erik Rasmussen](https://www.npmjs.org/~erikras) [@erikras](https://twitter.com/erikras)
