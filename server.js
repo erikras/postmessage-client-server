@@ -1,5 +1,5 @@
 'use strict';
-var when = require('when'),
+var Promise = require('bluebird'),
   /**
    * Creates a server.
    * @param methods the methods to be called on the server
@@ -19,7 +19,7 @@ var when = require('when'),
       if (data && data.postmessageClientServerMethod) {
         method = methods[data.postmessageClientServerMethod];
         if (method) {
-          when(method.apply(null, data.args))
+          Promise.resolve(method.apply(null, data.args))
             .then(function (result) {
               event.source.postMessage(JSON.stringify({id: data.id, result: result}), event.origin);
             }, function (error) {

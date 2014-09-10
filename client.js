@@ -1,5 +1,5 @@
 'use strict';
-var when = require('when'),
+var Promise = require('bluebird'),
   toArray = function (array) {
     var index = -1,
       length = array ? array.length : 0,
@@ -23,12 +23,15 @@ var when = require('when'),
       promises = [],
       count = 0,
       send = function (method) {
-        var deferred = when.defer(),
-          id = count++;
-        promises[id] = deferred;
-        getTargetWindow().postMessage(JSON.stringify({id: id, postmessageClientServerMethod: method, args: toArray(arguments).slice(1)}),
-          targetOrigin);
-        return deferred.promise;
+        var id = count++;
+        return new Promise(function (resolve, reject) {
+          promises[id] = {
+            resolve: resolve,
+            reject: reject
+          };
+          getTargetWindow().postMessage(JSON.stringify({id: id, postmessageClientServerMethod: method, args: toArray(arguments).slice(1)}),
+            targetOrigin);
+        });
       };
     if (targetWindow) {
       getTargetWindow = function () {
@@ -44,7 +47,7 @@ var when = require('when'),
       document.body.appendChild(iframe);
     }
 
-    return when.promise(function (resolve, reject, notify) {
+    return new Promise(function (resolve, reject) {
       window.addEventListener('message', function (event) {
         if (event.source !== getTargetWindow() || event.origin !== targetOrigin) {
           return;
