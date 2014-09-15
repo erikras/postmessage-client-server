@@ -1,4 +1,4 @@
-# postmessage-client-server [![npm version](https://img.shields.io/npm/v/postmessage-client-server.svg?style=flat)](https://www.npmjs.org/package/postmessage-client-server) [![npm downloads](https://img.shields.io/npm/dm/postmessage-client-server.svg?style=flat)](https://www.npmjs.org/package/postmessage-client-server) [![Dependency Status](https://img.shields.io/gemnasium/erikras/postmessage-client-server.svg?style=flat)](https://gemnasium.com/erikras/postmessage-client-server) [![WTFPL](https://img.shields.io/badge/license-WTFPL-brightgreen.svg?style=flat)](https://www.tldrlegal.com/l/wtfpl)
+# postmessage-client-server [![npm version](https://img.shields.io/npm/v/postmessage-client-server.svg?style=flat)](https://www.npmjs.org/package/postmessage-client-server) [![npm downloads](https://img.shields.io/npm/dm/postmessage-client-server.svg?style=flat)](https://www.npmjs.org/package/postmessage-client-server)
 
 > A simple promise-based client and server to communicate between pages and iframes with postmessage.
 
