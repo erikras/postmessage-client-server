@@ -1,7 +1,7 @@
 {
   "name": "postmessage-client-server",
   "description": "A simple promise-based client and server to communicate between pages and iframes with postmessage.",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "homepage": "https://github.com/erikras/postmessage-client-server",
   "author": {
     "name": "Erik Rasmussen",
@@ -25,7 +25,7 @@
   },
   "main": "index.js",
   "dependencies": {
-    "when": "^3.4.4"
+    "bluebird": "^2.3.2"
   },
   "keywords": [
     "postmessage",

@@ -2,7 +2,7 @@
 
 > A simple promise-based client and server to communicate between pages and iframes with postmessage.
 
-All data passed will be serialized with JSON. Uses [when.js promises](https://github.com/cujojs/when).
+All data passed will be serialized with JSON. Uses [Bluebird promises](https://github.com/petkaantonov/bluebird).
 
 ## Installation
 
