@@ -23,13 +23,14 @@ var Promise = require('bluebird'),
       promises = [],
       count = 0,
       send = function (method) {
-        var id = count++;
+        var id = count++,
+          args = toArray(arguments).slice(1);
         return new Promise(function (resolve, reject) {
           promises[id] = {
             resolve: resolve,
             reject: reject
           };
-          getTargetWindow().postMessage(JSON.stringify({id: id, postmessageClientServerMethod: method, args: toArray(arguments).slice(1)}),
+          getTargetWindow().postMessage(JSON.stringify({id: id, postmessageClientServerMethod: method, args: args}),
             targetOrigin);
         });
       };
