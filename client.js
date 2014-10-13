@@ -1,14 +1,5 @@
 'use strict';
 var Promise = require('bluebird'),
-  toArray = function (array) {
-    var index = -1,
-      length = array ? array.length : 0,
-      result = Array(length);
-    while (++index < length) {
-      result[index] = array[index];
-    }
-    return result;
-  },
   /**
    * Creates a client to talk to a server
    * @param target  the url where the server is
@@ -24,7 +15,7 @@ var Promise = require('bluebird'),
       count = 0,
       send = function (method) {
         var id = count++,
-          args = toArray(arguments).slice(1);
+          args = Array.prototype.slice(arguments, 1);
         return new Promise(function (resolve, reject) {
           promises[id] = {
             resolve: resolve,
