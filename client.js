@@ -15,7 +15,7 @@ var Promise = require('bluebird'),
       count = 0,
       send = function (method) {
         var id = count++,
-          args = Array.prototype.slice(arguments, 1);
+          args = Array.prototype.slice.call(arguments, 1);
         return new Promise(function (resolve, reject) {
           promises[id] = {
             resolve: resolve,
