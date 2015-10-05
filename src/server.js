@@ -4,7 +4,7 @@
  */
 export default function server(methods) {
   const clientWindow = window.parent === window ? window.opener : window.parent;
-  window.addEventListener('message', function(event) {
+  window.addEventListener('message', event => {
     if (event.source !== clientWindow) {
       return;
     }
@@ -28,7 +28,7 @@ export default function server(methods) {
             event.source.postMessage(JSON.stringify({id: data.id, error: caught.message || caught}), event.origin);
           });
       } else {
-        throw 'No method "' + data.postmessageClientServerMethod + '" found';
+        throw new Error('No method "' + data.postmessageClientServerMethod + '" found');
       }
     }
   });

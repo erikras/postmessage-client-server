@@ -11,8 +11,8 @@ export default function client(target, targetWindow) {
   let getTargetWindow;
   let count = 0;
   const send = (method, ...args) => {
-    var id = count++;
-    return new Promise(function(resolve, reject) {
+    const id = count++;
+    return new Promise((resolve, reject) => {
       promises[id] = {
         resolve: resolve,
         reject: reject
@@ -50,7 +50,7 @@ export default function client(target, targetWindow) {
             callPromise.resolve(data.result);
           }
         } else {
-          throw 'Cannot find call promise for id ' + data.id;
+          throw new Error('Cannot find call promise for id ' + data.id);
         }
       }
     });
