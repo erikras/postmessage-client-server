@@ -1,8 +1,10 @@
-# postmessage-client-server [![npm version](https://img.shields.io/npm/v/postmessage-client-server.svg?style=flat)](https://www.npmjs.org/package/postmessage-client-server) [![npm downloads](https://img.shields.io/npm/dm/postmessage-client-server.svg?style=flat)](https://www.npmjs.org/package/postmessage-client-server)
+[![npm version](https://img.shields.io/npm/v/postmessage-client-server.svg?style=flat)](https://www.npmjs.org/package/postmessage-client-server) [![npm downloads](https://img.shields.io/npm/dm/postmessage-client-server.svg?style=flat)](https://www.npmjs.org/package/postmessage-client-server)
+
+# postmessage-client-server
 
 > A simple promise-based client and server to communicate between pages and iframes with postmessage.
 
-All data passed will be serialized with JSON. Uses [Bluebird promises](https://github.com/petkaantonov/bluebird).
+All data passed will be serialized with JSON.
 
 ## Installation
 
@@ -17,19 +19,19 @@ npm install --save postmessage-client-server
 In your page the iframe will load on your server:
 
 ```js
-var server = require('postmessage-client-server/server');
+import {server} from 'postmessage-client-server';
 
 server({
   // Include any methods you wish to call from the client
-  bark: function (thing) {
+  bark(thing) {
     console.log('SERVER: Bark at', thing);
     return 'Barked at ' + thing;
   },
-  sniff: function () {
+  sniff() {
     console.log('SERVER: Sniffing...');
     return ['grass', 'ball'];
   },
-  beBad: function () {
+  beBad() {
     console.log('SERVER: About to misbehave...');
     throw 'Eating shoe';
   }
@@ -42,25 +44,26 @@ server({
 On your client webpage:
  
 ```js
-var client = require('postmessage-client-server/client'),
-  urlToServerPage = 'http://mycorp.com/serverFrame.html';
+import {client} from 'postmessage-client-server';
+
+const urlToServerPage = 'http://mycorp.com/serverFrame.html';
 
 client(urlToServerPage) // adds an iframe to the given url in your page
-  .then(function (send) {
+  .then(send => {
     // now we have our send function: send(method, args)
     send('sniff')
-      .then(function (stuffSmelt) {
+      .then(stuffSmelt => {
         console.log('CLIENT: We smelt:', stuffSmelt);
-        stuffSmelt.forEach(function (item) {
+        stuffSmelt.forEach(item => {
           send('bark', item)
-            .then(function (result) {
+            .then(result => {
               console.log('CLIENT: Bark result:', result);
             });
         });
         send('beBad')
-          .then(function () {
+          .then(() => {
             console.log('CLIENT: Not punished');  // won't happen
-          }, function (reason) {
+          }, reason => {
             console.log('CLIENT: Got punished for', reason);
           });
       });
