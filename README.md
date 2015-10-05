@@ -1,4 +1,7 @@
-[![npm version](https://img.shields.io/npm/v/postmessage-client-server.svg?style=flat)](https://www.npmjs.org/package/postmessage-client-server) [![npm downloads](https://img.shields.io/npm/dm/postmessage-client-server.svg?style=flat)](https://www.npmjs.org/package/postmessage-client-server)
+[![NPM Version](https://img.shields.io/npm/v/postmessage-client-server.svg?style=flat)](https://www.npmjs.com/package/postmessage-client-server) 
+[![NPM Downloads](https://img.shields.io/npm/dm/postmessage-client-server.svg?style=flat)](https://www.npmjs.com/package/postmessage-client-server)
+[![Build Status](https://img.shields.io/travis/erikras/postmessage-client-server/master.svg?style=flat)](https://travis-ci.org/erikras/postmessage-client-server)
+[![devDependency Status](https://david-dm.org/erikras/postmessage-client-server/dev-status.svg)](https://david-dm.org/erikras/postmessage-client-server#info=devDependencies)
 
 # postmessage-client-server
 
